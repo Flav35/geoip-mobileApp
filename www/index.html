@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/directives/IpCheck.js"></script>
+    <script src="js/services/MapFactory.js"></script>
+    <script src="js/controllers/SubmitController.js"></script>
+    <script src="js/app.js"></script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvteJwTMVfougnG1fjn8i3DzkVNNHfde0">
+    </script>
+    <style type="text/css">
+      #map { 
+        height: 80%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body ng-app="MainApp" ng-controller="SubmitController as submCtrl">
+
+    <ion-pane class="row">
+      <ion-header-bar class="bar bar-header bar-royal">
+        <h1 class="title">IP Loc</h1>
+      </ion-header-bar>
+      <ion-content>
+
+        <!-- Submit Form for api -->
+        <form ng-submit="submCtrl.submitForm()" name="formPrincipal">
+          <div class="list">
+            <label class="item item-input item-floating-label" ng-class="submCtrl.IP=='' ? 'error' : (formPrincipal.ip.$error.pattern ? 'error' : 'ok')">
+              <span class="input-label">IP or Host</span>
+              <input type="text" placeholder="IP or Host" name="ip" ng-model="submCtrl.IP" ng-pattern="/([0-9]+\.){3}([0-9]+){1}/" required>
+            </label>
+            <div class="list col">
+              <label class="item item-input item-select">
+                <div class="input-label">
+                  Informations
+                </div>
+                <select ng-model="submCtrl.choice">
+                  <option ng-selected="$last" ng-repeat="choice in submCtrl.choices">{{choice.name}}</option>
+                </select>
+              </label>
+            </div>
+            <div class="item item-toggle">
+              Show Map
+              <label class="toggle">
+                <input type="checkbox" ng-model="submCtrl.showMap" ng-click="submCtrl.resizeMap()">
+                <div class="track">
+                  <div class="handle"></div>
+                </div>
+              </label>
+            </div>
+            <button class="button button-block button-royal col" ng-disabled="!formPrincipal.$valid">
+              Check
+            </button>
+          </div>  
+        </form>
+        
+        <div class="col">
+          <ul class="list list-inset">
+
+            <li class="item" ng-repeat="(type,info) in submCtrl.data">
+              {{type}} : {{info}}{{(type=="latitude" || type=="longitude")?"°":""}}
+            </li>
+          </ul>
+        </div>
+
+        <div class="col padding-bottom" id="map" ng-show="submCtrl.showMap" data-tap-disabled="true"></div>
+
+      </ion-content>
+    </ion-pane>
+
+    <!-- Icon Go Top -->
+    <div class="tabs tabs-icon-only">
+    <a class="tab-item" ng-click="submCtrl.goTop()">
+      <i class="icon ion-chevron-up"></i>
+    </a>
+  </body>
+</html>
