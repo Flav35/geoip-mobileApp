@@ -1,9 +1,18 @@
 (function(){
 
+  /**
+   * @module MainApp.services
+   * @submodule MapFactory
+   */
   angular
   	.module('MainApp.services',[])
   	.factory('MapFactory',MapFactory);
 
+  /**
+   * Module MapFactory, provide GoogleMap instance
+   *
+   * @module 
+   */
   function MapFactory(){
 
     var service = {
@@ -12,15 +21,15 @@
 
     return service;
     /**
-    * Draw google map
-    *
-    * @method drawMap
-    * @param {String} divId <div>'s id where map is drawn
-    * @param {Float} latitude Latitude
-    * @param {Float} longitude Longitude
-    * @param {Integer} zoom Zoom
-    * @return {Object} map
-    */
+     * Draw google map
+     *
+     * @method drawMap
+     * @param {String} divId <div>'s id where map is drawn
+     * @param {Float} latitude Latitude
+     * @param {Float} longitude Longitude
+     * @param {Integer} zoom Zoom
+     * @return {Object} map
+     */
     function drawMap(divId,latitude,longitude,zoom){
       var map = new google.maps.Map(document.getElementById(divId), {
         center: {lat: latitude, lng: longitude},

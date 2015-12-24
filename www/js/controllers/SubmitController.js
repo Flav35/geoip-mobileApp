@@ -1,40 +1,49 @@
 (function(){
 
+  /**
+   * @module MainApp.controllers
+   * @submodule SubmitController
+   */
   angular
     .module('MainApp.controllers',['MainApp.services'])
     .controller('SubmitController',['$http','$location','MapFactory',SubmitController]);
 
   /**
-  * Submit Controller, handle IP or Host and does Ajax call
-  *
-  * @Class SubmitController
-  * @param {Object} $http Module for Ajax calls
-  * @param {Object} $location Module for window location
-  */
+   * Submit Controller, handle IP or Host and does Ajax call
+   *
+   * @Class SubmitController
+   * @param {Object} $http Module for Ajax calls
+   * @param {Object} $location Module for window location
+   */
   function SubmitController($http,$location,MapFactory){
     var vm = this;
     vm.IP = '';
     vm.map = {};
     vm.choices = [
       {
+        id: 1, 
         name: 'All',
         urlPart: '/',
       },
       {
+        id: 2, 
         name: 'Country',
         urlPart: '/country/',
       },
       {
+        id: 3, 
         name: 'City',
         urlPart: '/city/',
       },
       {
+        id: 4, 
         name: 'Location',
         urlPart: '/location/', 
       }
     ];
     vm.choice = vm.choices[3].name; //Default
     vm.showMap = true;
+    vm.showInfo = false;
     vm.data = {};
 
     vm.getChoiceByName = getChoiceByName;
@@ -43,12 +52,12 @@
     vm.resizeMap = resizeMap;
 
     /**
-    * Get Choice by name
-    *
-    * @method getChoiceByName
-    * @param {String} name Name of the choice
-    * @return {Object} the choice
-    */
+     * Get Choice by name
+     *
+     * @method getChoiceByName
+     * @param {String} name Name of the choice
+     * @return {Object} the choice
+     */
     function getChoiceByName(name){
       var objReturn;
       angular.forEach(vm.choices,function(obj,key){
@@ -60,16 +69,17 @@
     }
 
     /**
-    * Submit IP and Construct map
-    *
-    * @method submitForm
-    */
+     * Submit IP and Construct map
+     *
+     * @method submitForm
+     */
     function submitForm(){
       $http.jsonp(
         'http://api.flavien-hardy.me/api/geoip'+vm.getChoiceByName(vm.choice).urlPart+vm.IP+'?callback=JSON_CALLBACK',
         {
           responseType: 'jsonp'
         }).then(function(response){
+          vm.showInfo = true;
           vm.data = response.data;
           vm.map = MapFactory.drawMap('map',parseFloat(response.data.latitude),parseFloat(response.data.longitude),12);
         },
@@ -79,20 +89,20 @@
 
 
     /**
-    * Go to top
-    *
-    * @method goTop 
-    */
+     * Go to top
+     *
+     * @method goTop 
+     */
     function goTop(){
       $location.hash('formPrincipal');
     }
 
 
     /**
-    * Resize map
-    *
-    * @method resizeMap 
-    */
+     * Resize map
+     *
+     * @method resizeMap 
+     */
     function resizeMap(){
       if(!angular.equals(vm.map,{}))
         setTimeout(function(){

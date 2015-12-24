@@ -1,6 +1,10 @@
 (function(){
+
+  /**
+   * @module MainApp
+   */
   angular
-    .module('MainApp', ['ionic','MainApp.controllers','MainApp.services','MainApp.directives'])
+    .module('MainApp', ['ionic','MainApp.controllers','MainApp.services'/*,'MainApp.directives'*/])
 
     /* Codova/ionic stuff... */
     .run(function($ionicPlatform) {

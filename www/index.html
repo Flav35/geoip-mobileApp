@@ -19,19 +19,12 @@
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
-    <script src="js/directives/IpCheck.js"></script>
     <script src="js/services/MapFactory.js"></script>
     <script src="js/controllers/SubmitController.js"></script>
     <script src="js/app.js"></script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvteJwTMVfougnG1fjn8i3DzkVNNHfde0">
     </script>
-    <style type="text/css">
-      #map { 
-        height: 80%;
-        width: 100%;
-      }
-    </style>
   </head>
   <body ng-app="MainApp" ng-controller="SubmitController as submCtrl">
 
@@ -42,7 +35,7 @@
       <ion-content>
 
         <!-- Submit Form for api -->
-        <form ng-submit="submCtrl.submitForm()" name="formPrincipal">
+        <form ng-submit="submCtrl.submitForm()" name="formPrincipal" id="formPrincipal">
           <div class="list">
             <label class="item item-input item-floating-label" ng-class="submCtrl.IP=='' ? 'error' : (formPrincipal.ip.$error.pattern ? 'error' : 'ok')">
               <span class="input-label">IP or Host</span>
@@ -74,6 +67,7 @@
         </form>
         
         <div class="col">
+          <center ng-show="submCtrl.showInfo">{{submCtrl.choice}}</center>
           <ul class="list list-inset">
 
             <li class="item" ng-repeat="(type,info) in submCtrl.data">
@@ -81,8 +75,12 @@
             </li>
           </ul>
         </div>
+        <div class="col-offset-10 col-80"
+          id="map"
+          ng-show="submCtrl.showMap"
+          data-tap-disabled="true"
+          style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
 
-        <div class="col padding-bottom" id="map" ng-show="submCtrl.showMap" data-tap-disabled="true"></div>
 
       </ion-content>
     </ion-pane>
