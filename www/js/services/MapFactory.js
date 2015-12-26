@@ -1,22 +1,21 @@
-(function(){
+(function() {
 
   /**
    * @module MainApp.services
-   * @submodule MapFactory
    */
   angular
-  	.module('MainApp.services',[])
-  	.factory('MapFactory',MapFactory);
+    .module('MainApp.services')
+    .factory('MapFactory', MapFactory);
 
   /**
-   * Module MapFactory, provide GoogleMap instance
+   * MapFactory, provide GoogleMap instance
    *
-   * @module 
+   * @class MapFactory 
    */
-  function MapFactory(){
+  function MapFactory() {
 
     var service = {
-      drawMap     : drawMap, 
+      drawMap: drawMap,
     };
 
     return service;
@@ -30,13 +29,19 @@
      * @param {Integer} zoom Zoom
      * @return {Object} map
      */
-    function drawMap(divId,latitude,longitude,zoom){
+    function drawMap(divId, latitude, longitude, zoom) {
       var map = new google.maps.Map(document.getElementById(divId), {
-        center: {lat: latitude, lng: longitude},
+        center: {
+          lat: latitude,
+          lng: longitude
+        },
         zoom: zoom
       });
       var marker = new google.maps.Marker({
-        position: {lat: latitude, lng: longitude},
+        position: {
+          lat: latitude,
+          lng: longitude
+        },
         map: map,
         title: 'Approximative location'
       });

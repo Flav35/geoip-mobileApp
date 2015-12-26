@@ -19,7 +19,11 @@
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
+    <script src="js/services/ModuleProvider.js"></script>
+    <script src="js/services/DataParser.js"></script>
     <script src="js/services/MapFactory.js"></script>
+    <script src="js/services/Choices.js"></script>
+    <script src="js/controllers/ModuleProvider.js"></script>
     <script src="js/controllers/SubmitController.js"></script>
     <script src="js/app.js"></script>
     <script async defer
@@ -39,14 +43,14 @@
           <div class="list">
             <label class="item item-input item-floating-label" ng-class="submCtrl.IP=='' ? 'error' : (formPrincipal.ip.$error.pattern ? 'error' : 'ok')">
               <span class="input-label">IP or Host</span>
-              <input type="text" placeholder="IP or Host" name="ip" ng-model="submCtrl.IP" ng-pattern="/([0-9]+\.){3}([0-9]+){1}/" required>
+              <input type="text" placeholder="IP or Host" name="ip" ng-model="submCtrl.IP" ng-pattern="/^([0-9]\.|[0-9][0-9]\.|[01][0-9][0-9]\.|2[0-4][0-9]\.|25[0-5]\.){3}([0-9]|[0-9][0-9]|[01][0-9][0-9]|2[0-4][0-9]|25[0-5]){1}$/" required>
             </label>
             <div class="list col">
               <label class="item item-input item-select">
                 <div class="input-label">
                   Informations
                 </div>
-                <select ng-model="submCtrl.choice">
+                <select ng-model="submCtrl.choice" ng-change="(formPrincipal.$valid)?submCtrl.submitForm():''">
                   <option ng-selected="$last" ng-repeat="choice in submCtrl.choices">{{choice.name}}</option>
                 </select>
               </label>
@@ -69,9 +73,17 @@
         <div class="col">
           <center ng-show="submCtrl.showInfo">{{submCtrl.choice}}</center>
           <ul class="list list-inset">
-
-            <li class="item" ng-repeat="(type,info) in submCtrl.data">
+            <li class="item" ng-if="submCtrl.choice != 'All'" ng-repeat="(type,info) in submCtrl.data">
               {{type}} : {{info}}{{(type=="latitude" || type=="longitude")?"°":""}}
+            </li>
+            <li class="item" ng-if="submCtrl.choice == 'All'" ng-repeat="(type,info) in submCtrl.data">
+              <ul ng-if="(type == 'country')||(type == 'city')">
+                <span class="item item-divider">{{type}}</span>
+                <li class="item" ng-repeat="(type2,info2) in info">
+                  {{type2}} : {{info2}}{{(type=="latitude" || type=="longitude")?"°":""}}
+                </li>
+              </ul>
+              <div ng-if="(type != 'country')&&(type != 'city')">{{type}} : {{info}}{{(type=="latitude" || type=="longitude")?"°":""}}</div>
             </li>
           </ul>
         </div>
