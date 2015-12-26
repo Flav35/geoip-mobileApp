@@ -50,7 +50,7 @@
                 <div class="input-label">
                   Informations
                 </div>
-                <select ng-model="submCtrl.choice" ng-change="(formPrincipal.$valid)?submCtrl.submitForm():''">
+                <select ng-model="submCtrl.choice" ng-change="submCtrl.submitForm()" ng-disabled="!formPrincipal.$valid">
                   <option ng-selected="$last" ng-repeat="choice in submCtrl.choices">{{choice.name}}</option>
                 </select>
               </label>
