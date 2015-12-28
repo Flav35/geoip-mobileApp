@@ -1,17 +1,20 @@
-/**
- * @module MainApp.services
- */
-angular
-  .module('MainApp.services')
-  .factory('Choices',Choices);
+(function(){
 
-Choices.$inject = [];
+  /**
+   * @module MainApp.services
+   */
+  angular
+    .module('MainApp.services')
+    .factory('Choices',Choices);
 
-function Choices () {
-  return {
-    all:'All',
-    country: 'Country',
-    city: 'City',
-    location: 'Location',   
-  };
-}
+  Choices.$inject = [];
+
+  function Choices () {
+    return {
+      all:'All',
+      country: 'Country',
+      city: 'City',
+      location: 'Location',
+    };
+  }
+})();

@@ -97,7 +97,7 @@
     /**
      * Go to top
      *
-     * @method goTop 
+     * @method goTop
      */
     function goTop() {
       $location.hash('formPrincipal');
@@ -107,7 +107,7 @@
     /**
      * Resize map
      *
-     * @method resizeMap 
+     * @method resizeMap
      */
     function resizeMap() {
       if (!angular.equals(vm.map, {}))

@@ -19,6 +19,7 @@
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
+    <script src="js/directives/ModuleProvider.js"></script>
     <script src="js/services/ModuleProvider.js"></script>
     <script src="js/services/DataParser.js"></script>
     <script src="js/services/MapFactory.js"></script>
@@ -67,9 +68,9 @@
             <button class="button button-block button-royal col" ng-disabled="!formPrincipal.$valid">
               Check
             </button>
-          </div>  
+          </div>
         </form>
-        
+
         <div class="col">
           <center ng-show="submCtrl.showInfo">{{submCtrl.choice}}</center>
           <ul class="list list-inset">

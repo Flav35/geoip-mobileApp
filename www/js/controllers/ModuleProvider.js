@@ -1,6 +1,10 @@
-/**
- * MainApp Controllers module
- * @module MainApp.controllers
- */
-angular
-  .module('MainApp.controllers',['MainApp.services']);
+(function(){
+  /**
+   * MainApp Controllers module
+   * @module MainApp.controllers
+   */
+  angular
+    .module('MainApp.controllers',[
+      'MainApp.services'
+    ]);
+}());
